@@ -1,9 +1,12 @@
-function App() {
+import React from 'react'
+import Card from '../components/card'
+
+function App (): React.ReactElement {
   return (
     <div className="App">
-      hello,world
+      <Card />
     </div>
   )
 }
 
-export default App;
+export default App
