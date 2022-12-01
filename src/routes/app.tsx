@@ -1,12 +1,23 @@
 import React from 'react';
-import Card from '../components/card';
+import { Button, Space } from '@douyinfe/semi-ui';
+import { useNavigate, Outlet } from 'react-router-dom';
+import styles from './App.module.less';
 
-function App (): React.ReactElement {
+const App: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="App">
-      <Card />
+    <div className={styles.app}>
+      <Space>
+        <Button onClick={() => navigate('home')} theme="solid" type="warning">home page</Button>
+        <Button onClick={() => navigate('first-page')} theme="solid" type="primary">first page</Button>
+        <Button onClick={() => navigate('second-page')} theme="solid" type="secondary">second page</Button>
+        <Button onClick={() => navigate('third-page')} theme="solid" type="tertiary">third page</Button>
+        <Button onClick={() => navigate('not-found-page')} theme="solid" type="danger">no page</Button>
+      </Space>
+      <Outlet />
     </div>
   );
-}
+};
 
 export default App;
