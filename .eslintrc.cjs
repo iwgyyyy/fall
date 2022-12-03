@@ -34,6 +34,8 @@ module.exports = {
     '@typescript-eslint/triple-slash-reference': 'off',
     'react/jsx-indent-props': [2, 'first'],
     'react/jsx-max-props-per-line': [2, { when: 'multiline' }],
-    'react/react-in-jsx-scope': 'off'
+    'react/react-in-jsx-scope': 'off',
+    'space-before-function-paren': 'never',
+    '@typescript-eslint/space-before-function-paren': 'never'
   }
 };

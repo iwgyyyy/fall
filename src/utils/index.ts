@@ -1,7 +1,7 @@
 /**
  * 生成随机颜色
  */
-function randomColor (brighter: boolean = false): string {
+function randomColor(brighter: boolean = false): string {
   if (brighter) {
     return `hsl(${360 * Math.random()},${(25 + 70 * Math.random())}%,${(85 + 10 * Math.random())}%)`;
   }
