@@ -10,26 +10,11 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      {
-        path: 'home',
-        element: <Home />
-      },
-      {
-        path: 'first-page',
-        element: <FirstPage />
-      },
-      {
-        path: 'second-page',
-        element: <SecondPage />
-      },
-      {
-        path: 'third-page',
-        element: <ThirdPage />
-      },
-      {
-        path: '*',
-        element: <div>404 not found</div>
-      }
+      { path: 'home', element: <Home /> },
+      { path: 'first-page', element: <FirstPage /> },
+      { path: 'second-page', element: <SecondPage /> },
+      { path: 'third-page', element: <ThirdPage /> },
+      { path: '*', element: <div>404 not found</div> }
     ]
   },
   {
