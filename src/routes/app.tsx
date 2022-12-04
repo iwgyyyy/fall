@@ -12,7 +12,7 @@ const App: React.FC = () => {
         <Button onClick={() => navigate('home')} theme="solid" type="warning">home page</Button>
         <Button onClick={() => navigate('first-page')} theme="solid" type="primary">first page</Button>
         <Button onClick={() => navigate('second-page')} theme="solid" type="secondary">second page</Button>
-        <Button onClick={() => navigate('third-page')} theme="solid" type="tertiary">third page</Button>
+        {/* <Button onClick={() => navigate('third-page')} theme="solid" type="tertiary">third page</Button> */}
         <Button onClick={() => navigate('not-found-page')} theme="solid" type="danger">no page</Button>
       </Space>
       <div className={styles.content}>
