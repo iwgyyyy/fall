@@ -14,7 +14,7 @@ const router = createBrowserRouter([
       { path: 'first-page', element: <FirstPage /> },
       { path: 'second-page', element: <SecondPage /> },
       { path: 'third-page', element: <ThirdPage /> },
-      { path: '*', element: <div>404 not found</div> }
+      { path: '*', element: <Navigate to='home' /> }
     ]
   },
   {
