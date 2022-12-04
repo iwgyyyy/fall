@@ -11,8 +11,8 @@ const Home: React.FC = () => {
   const [cards, setCards] = useState([1, 2, 3, 4, 5]);
 
   const handleAdd = (): void => {
-    if (cards.length >= 10) {
-      Toast.warning('最多只能添加至10个');
+    if (cards.length >= 20) {
+      Toast.warning('最多只能添加至20个');
       return;
     }
     const speed = Math.ceil(Math.random() * 10);
