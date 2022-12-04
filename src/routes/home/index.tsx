@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Space, Toast } from '@douyinfe/semi-ui';
 import useClientRect from '@/hooks/use-client-rect';
-import styles from './Home.module.less';
 import FallCard from '@/components/fall-card';
+import { v4 as uuid } from 'uuid';
+import styles from './Home.module.less';
 
 const Home: React.FC = () => {
   const [parentRect, parentRef] = useClientRect();
 
   const [stop, setStop] = useState(false);
-  const [cards, setCards] = useState([1, 2, 3, 4, 5]);
+  const [cards, setCards] = useState(() => [
+    { speed: 1, key: uuid() },
+    { speed: 2, key: uuid() },
+    { speed: 3, key: uuid() },
+    { speed: 4, key: uuid() },
+    { speed: 5, key: uuid() }
+  ]);
 
   const handleAdd = (): void => {
     if (cards.length >= 20) {
@@ -16,7 +23,7 @@ const Home: React.FC = () => {
       return;
     }
     const speed = Math.ceil(Math.random() * 10);
-    setCards([...cards, speed]);
+    setCards([...cards, { speed, key: uuid() }]);
   };
 
   const handleReduce = (): void => {
@@ -40,7 +47,7 @@ const Home: React.FC = () => {
       </Space>
       <div ref={parentRef} className={styles.fallWrapper}>
         {cards.map(card => (
-          <FallCard key={card} parentRect={parentRect} speed={card} stop={stop} />
+          <FallCard key={card.key} parentRect={parentRect} speed={card.speed} stop={stop} />
         ))}
       </div>
     </div>
