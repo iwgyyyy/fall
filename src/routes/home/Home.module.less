@@ -1,14 +1,21 @@
 .home {
   width: 100%;
   height: 100%;
-  position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.card {
-  width: 100px;
-  height: 120px;
-  position: absolute;
-  left: 40%;
-  background-color: red;
+.options {
+  height: 60px;
+  line-height: 60px;
+  flex-shrink: 0;
+  justify-content: center;
+  border-bottom: 1px solid rgba(17, 39, 77, 0.1);
+}
+
+.fallWrapper {
+  height: 0;
+  flex-grow: 1;
+  overflow: hidden;
+  position: relative;
 }

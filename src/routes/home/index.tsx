@@ -1,54 +1,48 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { randomColor } from '@/utils';
-import { Button } from '@douyinfe/semi-ui';
+import React, { useState } from 'react';
+import { Button, Space, Toast } from '@douyinfe/semi-ui';
 import useClientRect from '@/hooks/use-client-rect';
 import styles from './Home.module.less';
+import FallCard from '@/components/fall-card';
 
 const Home: React.FC = () => {
-  const [top, setTop] = useState(0);
-
-  const intervalRef = useRef<any>();
-
   const [parentRect, parentRef] = useClientRect();
-  const [cardRect, cardRef] = useClientRect(top);
 
-  useEffect(() => {
-    intervalRef.current =  setInterval(() => {
-      setTop((pre) => pre + 5);
-    }, 10);
-    return () => clearInterval(intervalRef.current);
-  }, []);
+  const [stop, setStop] = useState(false);
+  const [cards, setCards] = useState([1, 2, 3, 4, 5]);
 
-  const handleClick = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    } else {
-      intervalRef.current = setInterval(() => {
-        setTop((pre) => pre + 5);
-      }, 10);
+  const handleAdd = (): void => {
+    if (cards.length >= 10) {
+      Toast.warning('最多只能添加至10个');
+      return;
     }
+    const speed = Math.ceil(Math.random() * 10);
+    setCards([...cards, speed]);
   };
 
-  useEffect(() => {
-    if (cardRect && parentRect && (cardRect.top - cardRect.height) > parentRect.height) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-      setTimeout(() => {
-        setTop(-cardRect.height);
-        intervalRef.current = setInterval(() => {
-          setTop((pre) => pre + 5);
-        }, 10);
-      }, 100);
-    }
-  }, [cardRect, parentRect]);
+  const handleReduce = (): void => {
+    if (cards.length === 0) {
+      Toast.warning('不能再减少了!');
+      return;
+    };
+    const newCards = [...cards];
+    newCards.splice(-1, 1);
+    setCards(newCards);
+  };
 
   return (
-    <div ref={parentRef} className={styles.home}>
-      <Button type="primary" theme="light" onClick={handleClick}>
-        stop
-      </Button>
-      <div ref={cardRef} className={styles.card} style={{ top }} />
+    <div className={styles.home}>
+      <Space className={styles.options}>
+        <Button type="primary" theme="solid" onClick={() => setStop(!stop)}>
+          {stop ? 'start' : 'stop'}
+        </Button>
+        <Button type="warning" theme="solid" onClick={handleAdd}>+</Button>
+        <Button type="danger" theme="solid" onClick={handleReduce}>-</Button>
+      </Space>
+      <div ref={parentRef} className={styles.fallWrapper}>
+        {cards.map(card => (
+          <FallCard key={card} parentRect={parentRect} speed={card} stop={stop} />
+        ))}
+      </div>
     </div>
   );
 };

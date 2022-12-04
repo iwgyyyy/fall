@@ -35,7 +35,6 @@ module.exports = {
     'react/jsx-indent-props': [2, 'first'],
     'react/jsx-max-props-per-line': [2, { when: 'multiline' }],
     'react/react-in-jsx-scope': 'off',
-    'space-before-function-paren': 'never',
-    '@typescript-eslint/space-before-function-paren': 'never'
+    '@typescript-eslint/strict-boolean-expressions': 'off'
   }
 };
