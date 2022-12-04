@@ -1,6 +1,6 @@
 import { useState, useCallback, LegacyRef } from 'react';
 
-function useClientRect(deps?: any): [DOMRect | undefined, LegacyRef<any>] {
+function useClientRect (deps?: any): [DOMRect | undefined, LegacyRef<any>] {
   const [rect, setRect] = useState<DOMRect>();
 
   const ref = useCallback((node: HTMLElement) => {
