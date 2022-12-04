@@ -14,12 +14,12 @@ const router = createBrowserRouter([
       { path: 'first-page', element: <FirstPage /> },
       { path: 'second-page', element: <SecondPage /> },
       { path: 'third-page', element: <ThirdPage /> },
-      { path: '*', element: <Navigate to='home' /> }
+      { path: '*', element: <Navigate to='home' replace /> }
     ]
   },
   {
     path: '*',
-    element: <Navigate to='/' />
+    element: <Navigate to='/' replace />
   }
 ], {
   basename: '/fall/'

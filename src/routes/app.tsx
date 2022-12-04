@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Space } from '@douyinfe/semi-ui';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import styles from './App.module.less';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location?.pathname === '/') {
+      navigate('/home');
+    }
+  }, [location]);
 
   return (
     <div className={styles.app}>
