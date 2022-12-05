@@ -1,58 +1,49 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
-import useClientRect from '@/hooks/use-client-rect';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import { FallCardProps } from '@/types';
-import { randomColor } from '@/utils';
+import { randomColor, randomNumber } from '@/utils';
 import styles from './FallCard.module.less';
 
 const FallCard: React.FC<FallCardProps> = (props) => {
   const { parentRect, speed = 3, stop = false } = props;
 
-  const intervalRef = useRef<any>();
+  const cardRef = useRef<any>();
 
-  const [width, setWidth] = useState(Math.max(50, Math.ceil(Math.random() * 300)));
-  const [top, setTop] = useState(0);
-  const [left, setLeft] = useState<string | number>(() => `${Math.random() * 100}%`);
-  const [background, setBackground] = useState(() => randomColor());
+  const [backgroundColor, setBackgroundColor] = useState(() => randomColor());
+  const [left, setLeft] = useState<string | number>(() => `calc(${Math.random() * 100}% - 500px)`);
+  const [width, setWidth] = useState(() => randomNumber(50, 500));
 
-  const [cardRect, cardRef] = useClientRect(top);
-
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      setTop((pre) => pre + speed);
-    }, 5);
-    return () => clearInterval(intervalRef.current);
-  }, []);
-
-  useEffect(() => {
-    if (stop) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-    } else if (!intervalRef.current) {
-      intervalRef.current = setInterval(() => {
-        setTop((pre) => pre + speed);
-      }, 5);
-    } else if (cardRect && parentRect && (cardRect.top - parentRect.top) > parentRect.height) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = undefined;
-      setTimeout(() => {
-        const randomWidth = Math.max(50, Math.ceil(Math.random() * 300));
-        const randomLeft = Math.min(Math.random() * parentRect.width, parentRect.width - randomWidth);
-        setTop(-cardRect.height);
-        setLeft(randomLeft);
-        setBackground(randomColor());
-        setWidth(randomWidth);
-        intervalRef.current = setInterval(() => {
-          setTop((pre) => pre + speed);
-        }, 10);
-      }, 100);
+  const handleAnimationIteration = useCallback((e: any): void => {
+    if (parentRect) {
+      e.target.style.animationPlayState = 'paused';
+      const randomWidth = Math.max(50, Math.ceil(Math.random() * 300));
+      const randomLeft = Math.min(Math.random() * parentRect.width, parentRect.width - randomWidth);
+      setLeft(randomLeft);
+      setWidth(randomWidth);
+      setBackgroundColor(randomColor());
+      e.target.style.animationPlayState = 'running';
     }
-  }, [cardRect, parentRect, stop]);
+  }, [parentRect]);
+
+  useLayoutEffect(() => {
+    const card = cardRef.current;
+    card.addEventListener('animationiteration', handleAnimationIteration, false);
+    return () => card.removeEventListener('animationiteration', handleAnimationIteration);
+  }, [handleAnimationIteration]);
+
+  useLayoutEffect(() => {
+    const card = cardRef.current;
+    if (stop) {
+      card.style.animationPlayState = 'paused';
+    } else {
+      card.style.animationPlayState = 'running';
+    }
+  }, [stop]);
 
   return (
     <div
       ref={cardRef}
       className={styles.fallCard}
-      style={{ top, backgroundColor: background, left, width, height: width * 1.2 }}
+      style={{ width, height: width * 1.2, backgroundColor, left, animationDuration: `${speed}s` }}
     />
   );
 };

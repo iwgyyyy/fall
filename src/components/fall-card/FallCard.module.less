@@ -1,6 +1,20 @@
+@keyframes fall {
+  from {
+    top: 0;
+    transform: translateY(-150%);
+  }
+  to {
+    top: 100%;
+    transform: translateY(100%);
+  }
+}
+
 .fallCard {
   width: 50px;
   height: 60px;
   position: absolute;
   border-radius: 6px;
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
