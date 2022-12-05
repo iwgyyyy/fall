@@ -1,11 +1,11 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { Navigate, createHashRouter } from 'react-router-dom';
 import App from './app';
 import FirstPage from './first-page';
 import Home from './home';
 import SecondPage from './second-page';
 import ThirdPage from './third-page';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,
@@ -21,8 +21,6 @@ const router = createBrowserRouter([
     path: '*',
     element: <Navigate to='/' replace />
   }
-], {
-  basename: '/fall/'
-});
+]);
 
 export default router;
